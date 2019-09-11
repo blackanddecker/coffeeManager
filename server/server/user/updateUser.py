@@ -9,12 +9,13 @@ def updateUser(request , connection):
     print(data)
     if request.method != 'POST':
         return '', status.HTTP_406_NOT_ACCEPTABLE
-    if 'idemployee' not in data:
-        return 'No \"idemployee\"', status.HTTP_406_NOT_ACCEPTABLE
+    if 'id' not in data:
+        return 'No \"id\"', status.HTTP_406_NOT_ACCEPTABLE
     
     try:
         with connection.cursor() as cursor:
-            sql = "UPDATE shopmanager.employee SET name='{}', status='{}' WHERE idemployee={}".format(data['name'],data['status'],data['idemployee'])
+            sql = "UPDATE shopmanager.employee SET name='{}', status='{}' WHERE id={}".format(data['name'],data['status'],data['id'])
+            print(sql)
             cursor.execute(sql)
             connection.commit()
         responce = 'OK'

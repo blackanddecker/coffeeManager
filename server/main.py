@@ -91,11 +91,6 @@ def products():
 def contact():
     return render_template('contact.html')
 
-@app.route('/script')
-def _script():
-    return render_template('script.js')
-
-
 @app.route('/index')
 def index():
     return render_template('index.html')
@@ -107,6 +102,40 @@ def users():
 @app.route('/tables')
 def tables():
     return render_template('tables.html')
+
+
+
+
+
+#-------------------------------------------
+@app.route('/script')
+def _script():
+    return render_template('script.js')
+
+@app.route('/usersjs')
+def _userjs():
+    return render_template('usersjs.js')
+
+@app.route('/ordersjs')
+def _ordersjs():
+    return render_template('ordersjs.js')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #------------------------------------------------------------------_Shop

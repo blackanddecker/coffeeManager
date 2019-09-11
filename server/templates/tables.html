@@ -4,7 +4,6 @@
   <title>Bootstrap 4 Website Example</title>
   <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -46,35 +45,40 @@
         </ul>
       </div>  
     </nav>
+    
+
     <div class="container">
       <h2>Product</h2>
       <label>All products. You can Update or Delete them.</label>
       <!-- Table with alternating cell background color and outer frame -->
-      <div id=selectProducts> </div>
+      <div id=selectTables class="col-md-4"></div>
       <script type="text/javascript">
         $(function(){
           
-
           var shop_id = localStorage.getItem('shop_id');
-          
-
+        
           $.ajax({
-              url: "http://127.0.0.1:5000/select_table/"+shop_id,
+              url: "select_table/"+shop_id,
               type: "GET",
               dataType : "json",
               success: function(res){
-            var table = '<table class="table table-striped table-bordered"><thead><tr><th>Name</th><th>order</th></tr></thead><tbody>';
+            var table = '<table class="table table-striped"><tr><th>Table</th><th>Order</th>'
+            table+= '<th>Waiter</th>'
+            table+= '<th>Price</th>'
+            table+= '</tr><tbody>';
             var i=0;
             data = res
             for (i=0; i< data.length ; i++){
               table+='<tr>'
               table+="<td>"+ data[i].no_table+ "</td>"
-              //table+= "<td>"+'<div id = deleteButton>' 
+              table+="<td>"+ data[i].status+ "</td>"
+              table+="<td>"+ data[i].name+ "</td>"
+              table+="<td>"+ data[i].price+ "</td>"
               //table+= '<button type="button"> Delete </button> </div>' + "</td>"
               table+='</tr>'
             }
             table+='</tbody></table>'; 
-            document.getElementById("selectProducts").innerHTML= table;
+            document.getElementById("selectTables").innerHTML= table;
               },
               error: function(xhr , status){
                 document.write("<p>" +status+"</p>");
@@ -83,13 +87,13 @@
           });
         });
     </script>
-      <h2>Add Table</h2>
+      
 
       <!-- Add -->
       <form class="well form-search" id="addForm" method="post">
 
-      <div id =submit>
-        <button type="button">Submit</button>    
+      <div class="col-md-4" id =submit>
+        <button type="button">Add New Table</button>    
       </div>
 
         <script type="text/javascript">
@@ -102,13 +106,13 @@
              };
 
           $.ajax({
-              url: "http://127.0.0.1:5000/add_table",
+              url: "add_table",
               type: "POST",
                   dataType: 'json',
                   contentType: "application/json; charset=utf-8",
                   traditional: true,
               success: function(res){
-                window.location.href = "tables.html";
+                window.location.href = "tables";
 
               },
               error: function(xhr , status){
