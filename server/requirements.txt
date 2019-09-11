@@ -1,0 +1,6 @@
+flask
+PyMySQL
+flask_api
+flask-httpauth
+requests
+flask-cors

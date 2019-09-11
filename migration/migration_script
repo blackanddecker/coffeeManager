@@ -1,0 +1,125 @@
+-- ----------------------------------------------------------------------------
+-- MySQL Workbench Migration
+-- Migrated Schemata: shopmanager
+-- Source Schemata: shopmanager
+-- Created: Mon Sep  2 01:06:18 2019
+-- Workbench Version: 6.3.6
+-- ----------------------------------------------------------------------------
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------------------------------------------------------
+-- Schema shopmanager
+-- ----------------------------------------------------------------------------
+DROP SCHEMA IF EXISTS `shopmanager` ;
+CREATE SCHEMA IF NOT EXISTS `shopmanager` ;
+
+-- ----------------------------------------------------------------------------
+-- Table shopmanager.employee
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `shopmanager`.`employee` (
+  `id` INT(11) NOT NULL,
+  `name` VARCHAR(45) NULL DEFAULT NULL,
+  `status` VARCHAR(45) NULL DEFAULT NULL,
+  `shop_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_employee_shop1_idx` (`shop_id` ASC),
+  CONSTRAINT `fk_employee_shop1`
+    FOREIGN KEY (`shop_id`)
+    REFERENCES `shopmanager`.`shop` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+-- ----------------------------------------------------------------------------
+-- Table shopmanager.order
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `shopmanager`.`order` (
+  `id` INT(11) NOT NULL,
+  `price` FLOAT NULL DEFAULT NULL,
+  `date_order` DATETIME NULL DEFAULT NULL,
+  `status` VARCHAR(45) NULL DEFAULT NULL,
+  `date_paid` VARCHAR(45) NULL DEFAULT NULL,
+  `orderinfo_id` INT(11) NOT NULL,
+  `table_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_order_orderinfo1_idx` (`orderinfo_id` ASC),
+  INDEX `fk_order_table1_idx` (`table_id` ASC),
+  CONSTRAINT `fk_order_orderinfo1`
+    FOREIGN KEY (`orderinfo_id`)
+    REFERENCES `shopmanager`.`orderinfo` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_order_table1`
+    FOREIGN KEY (`table_id`)
+    REFERENCES `shopmanager`.`table` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+-- ----------------------------------------------------------------------------
+-- Table shopmanager.orderinfo
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `shopmanager`.`orderinfo` (
+  `id` INT(11) NOT NULL,
+  `details` VARCHAR(45) NULL DEFAULT NULL,
+  `product_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_orderinfo_product1_idx` (`product_id` ASC),
+  CONSTRAINT `fk_orderinfo_product1`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `shopmanager`.`product` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+-- ----------------------------------------------------------------------------
+-- Table shopmanager.product
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `shopmanager`.`product` (
+  `id` INT(11) NOT NULL,
+  `name` VARCHAR(45) NULL DEFAULT NULL,
+  `price` FLOAT NULL DEFAULT NULL,
+  `details` VARCHAR(45) NULL DEFAULT NULL,
+  `shop_id` INT(11) NOT NULL,
+  `available` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_product_shop1_idx` (`shop_id` ASC),
+  CONSTRAINT `fk_product_shop1`
+    FOREIGN KEY (`shop_id`)
+    REFERENCES `shopmanager`.`shop` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+-- ----------------------------------------------------------------------------
+-- Table shopmanager.shop
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `shopmanager`.`shop` (
+  `id` INT(11) NOT NULL,
+  `name` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+-- ----------------------------------------------------------------------------
+-- Table shopmanager.table
+-- ----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `shopmanager`.`table` (
+  `id` INT(11) NOT NULL,
+  `shop_id` INT(11) NOT NULL,
+  `no_table` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_table_shop1_idx` (`shop_id` ASC),
+  CONSTRAINT `fk_table_shop1`
+    FOREIGN KEY (`shop_id`)
+    REFERENCES `shopmanager`.`shop` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+SET FOREIGN_KEY_CHECKS = 1;

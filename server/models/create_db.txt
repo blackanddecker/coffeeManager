@@ -1,0 +1,132 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema shopmanager
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema shopmanager
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `shopmanager` DEFAULT CHARACTER SET utf8 ;
+USE `shopmanager` ;
+
+-- -----------------------------------------------------
+-- Table `shopmanager`.`shop`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `shopmanager`.`shop` (
+  `idshop` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`idshop`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `shopmanager`.`employee`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `shopmanager`.`employee` (
+  `idemployee` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `idshop` INT NULL,
+  PRIMARY KEY (`idemployee`),
+  INDEX `idshop_idx` (`idshop` ASC),
+  CONSTRAINT `idshop`
+    FOREIGN KEY (`idshop`)
+    REFERENCES `shopmanager`.`shop` (`idshop`)
+    ON DELETE SET NULL
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `shopmanager`.`product`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `shopmanager`.`product` (
+  `idproduct` INT NOT NULL,
+  `name` VARCHAR(45) NULL,
+  `price` FLOAT NULL,
+  `idshop` INT NULL,
+  `details` VARCHAR(45) NULL,
+  `availability` INT NULL,
+  PRIMARY KEY (`idproduct`),
+  INDEX `idshop_idx` (`idshop` ASC),
+  CONSTRAINT `idshop`
+    FOREIGN KEY (`idshop`)
+    REFERENCES `shopmanager`.`shop` (`idshop`)
+    ON DELETE SET NULL
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `shopmanager`.`table`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `shopmanager`.`table` (
+  `idtable` INT NOT NULL,
+  `idshop` INT NULL,
+  `idemployee` INT NULL,
+  PRIMARY KEY (`idtable`),
+  INDEX `idshop_idx` (`idshop` ASC, `idemployee` ASC),
+  CONSTRAINT `idshop`
+    FOREIGN KEY (`idshop` , `idemployee`)
+    REFERENCES `shopmanager`.`shop` (`idshop` , `idshop`)
+    ON DELETE SET NULL
+    ON UPDATE NO ACTION,
+  CONSTRAINT `idemployee`
+    FOREIGN KEY (`idshop` , `idemployee`)
+    REFERENCES `shopmanager`.`employee` (`idshop` , `idemployee`)
+    ON DELETE SET NULL
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `shopmanager`.`order`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `shopmanager`.`order` (
+  `idorder` INT NOT NULL,
+  `price` FLOAT NULL,
+  `date_order` DATETIME NULL,
+  `status` VARCHAR(45) NULL,
+  `idtable` INT NULL,
+  `date_paid` VARCHAR(45) NULL,
+  PRIMARY KEY (`idorder`),
+  INDEX `idtable_idx` (`idtable` ASC),
+  CONSTRAINT `idtable`
+    FOREIGN KEY (`idtable`)
+    REFERENCES `shopmanager`.`table` (`idtable`)
+    ON DELETE SET NULL
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `shopmanager`.`orderinfo`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `shopmanager`.`orderinfo` (
+  `idorderinfo` INT NOT NULL,
+  `idorder` INT NULL,
+  `idproduct` INT NULL,
+  `details` VARCHAR(45) NULL,
+  PRIMARY KEY (`idorderinfo`),
+  INDEX `fk_orderinfo_1_idx` (`idproduct` ASC),
+  INDEX `fk_orderinfo_1_idx1` (`idorder` ASC),
+  CONSTRAINT `idproduct`
+    FOREIGN KEY (`idproduct`)
+    REFERENCES `shopmanager`.`product` (`idproduct`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `idorder`
+    FOREIGN KEY (`idorder`)
+    REFERENCES `shopmanager`.`order` (`idorder`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
