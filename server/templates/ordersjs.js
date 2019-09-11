@@ -72,6 +72,100 @@ $("form#addUser").submit(function() {
 });
 
 
+
+
+
+
+
+
+function update_delivered_order(id) {
+  
+  var msg = "User updated successfully!";
+  var sendInfo={};
+
+  sendInfo.order_id =id
+
+  if (sendInfo.order_id) {
+    $.ajax({
+        url: "/update_delivered_order",
+        type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+        success: function(res){
+          window.location.href = "orders";
+        },
+        error: function(xhr , status){
+          document.write("<p>" +status+"</p>");
+        },
+        data: JSON.stringify(sendInfo)
+      });
+    } 
+    else {
+    alert("All fields must have a valid value.");
+  }
+}
+
+
+function update_paid_order(id) {
+  
+  var msg = "User updated successfully!";
+  var sendInfo={};
+
+  sendInfo.order_id =id
+
+  if (sendInfo.order_id) {
+    $.ajax({
+        url: "/update_paid_order",
+        type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+        success: function(res){
+          window.location.href = "orders";
+        },
+        error: function(xhr , status){
+          document.write("<p>" +status+"</p>");
+        },
+        data: JSON.stringify(sendInfo)
+      });
+    } 
+    else {
+    alert("All fields must have a valid value.");
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // edit user form 
 function editUser(id) {
   users.forEach(function(user, i) {
@@ -159,11 +253,20 @@ function flashMessage(msg) {
 function appendToUsrTable(user) {
   $("#orderTable > tbody:last-child").append(`
         <tr id="user-${user.id}">
-            <td class="userData" name="name">${user.name}</td>
+            <td class="userData" name="name">${user.id}</td>
             '<td class="userData" name="status">${user.status}</td>
             '<td class="userData" name="price">${user.price}</td>
+            '<td class="userData" name="no_table">${user.no_table}</td>
+            '<td class="userData" name="date_paid">${user.date_paid}</td>
+
             '<td align="center">
-                <button class="btn btn-success form-control" onClick="editUser(${user.id})" data-toggle="modal" data-target="#myModal")">EDIT</button>
+                <button class="btn btn-success form-control" onClick="editUser(${user.id})" data-toggle="modal" data-target="#myModal")">More</button>
+            </td>
+            '<td align="center">
+                <button class="btn btn-success form-control" onClick="update_delivered_order(${user.id})" )">Delivered</button>
+            </td>
+            '<td align="center">
+                <button class="btn btn-success form-control" onClick="update_paid_order(${user.id})" )">Paid</button>
             </td>
         </tr>
     `);

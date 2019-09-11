@@ -124,7 +124,7 @@ function updateUser(id) {
             contentType: "application/json; charset=utf-8",
             traditional: true,
         success: function(res){
-          window.location.href = "products.html";
+          window.location.href = "products";
 
         },
         error: function(xhr , status){

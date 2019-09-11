@@ -14,7 +14,6 @@ def update_delivered_order(request, connection):
     if 'order_id' not in data:
         return 'No \"order_id\"', status.HTTP_406_NOT_ACCEPTABLE
 
-
     try: 
         with connection.cursor() as cursor:
             sql = "SELECT SUM(p.price) FROM shopmanager.order o, shopmanager.product p , shopmanager.orderinfo i\
@@ -24,6 +23,8 @@ def update_delivered_order(request, connection):
             result = cursor.fetchall()
             price = result[0]['SUM(p.price)']
 
+            if price is None: 
+                price =0 
         with connection.cursor() as cursor:
             sql = "UPDATE shopmanager.order SET price= {}, status='delivered', date_delivered='{}' WHERE id={};".format(price , datetime.datetime.now(),data['order_id'])
             cursor.execute(sql)

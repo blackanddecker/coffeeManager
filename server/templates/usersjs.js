@@ -120,7 +120,7 @@ function updateUser(id) {
     }
   });
 
-  if (sendInfo.idemployee) {
+  if (sendInfo.id) {
     $.ajax({
         url: "/updateUser",
         type: "POST",
@@ -128,7 +128,7 @@ function updateUser(id) {
             contentType: "application/json; charset=utf-8",
             traditional: true,
         success: function(res){
-          window.location.href = "users.html";
+          window.location.href = "users";
         },
         error: function(xhr , status){
           document.write("<p>" +status+"</p>");
