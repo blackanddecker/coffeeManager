@@ -6,7 +6,7 @@ import pymysql.cursors
 from flask import render_template, request
 from flask import jsonify
 
-from server import login
+from server import login_user
 
 #shops
 from server.shop import addShop
@@ -60,16 +60,19 @@ def unauthorized():
     return make_response(jsonify({'error': 'Unauthorized access'}), 401)
 
 @app.route('/')
-def index():
-    #return render_template("index.html", message="Hello Flask!");   
+def login():
+    #return render_template("index.html", message="Hello Flask!"); 
+    print("in login") 
     return render_template('login.html')
 
 
-@app.route('/login', methods=['POST'])
+
+@app.route('/login_user', methods=['POST'])
 #@auth.login_required
-def _login():
+def _login_user():
+    print("in login user") 
     connection = get_connection()
-    content , status = login.login(request, connection)
+    content , status = login_user.login_user(request, connection)
     response = flask.jsonify(content)
     response.status_code = status
     print(status)
@@ -82,11 +85,30 @@ def orders():
 
 @app.route('/products')
 def products():
-    return render_template('products')
+    return render_template('products.html')
 
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
+@app.route('/script')
+def _script():
+    return render_template('script.js')
+
+
+@app.route('/index')
+def index():
+    return render_template('index.html')
+
+@app.route('/users')
+def users():
+    return render_template('users.html')
+
+@app.route('/tables')
+def tables():
+    return render_template('tables.html')
+
+
 #------------------------------------------------------------------_Shop
 @app.route('/addShop', methods=['POST'])
 #@auth.login_required

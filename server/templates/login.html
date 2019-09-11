@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -37,7 +36,7 @@
         <button type="button">Submit</button>    
       </div>
 
-        <script type="text/javascript">
+        <script type="application/javascript">
         $("#submit").click(function() {
              var sendInfo = {
             email: $('#email').val(),
@@ -45,7 +44,7 @@
              };
 
           $.ajax({
-              url: "https://shopmanager-dot-grounded-gizmo-251616.appspot.com/login",
+              url: "/login_user",
               type: "POST",
                   dataType: 'json',
                   contentType: "application/json; charset=utf-8",
@@ -59,11 +58,11 @@
                 localStorage.setItem('status',res[0].status);
                 localStorage.setItem('id',res[0].id);
 
-                window.location.href = "index.html";
+                window.location.href = "index";
 
               },
               error: function(xhr , status){
-                window.location.href = "login.html";
+                window.location.href = "/";
               },
               data: JSON.stringify(sendInfo)
           });

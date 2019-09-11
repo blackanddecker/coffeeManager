@@ -5,7 +5,7 @@ function select_product(){
   var shop_id = localStorage.getItem('shop_id');
   
   $.ajax({
-      url: "http://127.0.0.1:5000/select_product/"+shop_id,
+      url: "/select_product/"+shop_id,
       type: "GET",
       dataType : "json",
       success: function(res){
@@ -45,13 +45,13 @@ $("form#addProduct").submit(function() {
 
   if (sendInfo.name && sendInfo.price && sendInfo.details && sendInfo.available) {
     $.ajax({
-        url: "http://127.0.0.1:5000/add_product",
+        url: "/add_product",
         type: "POST",
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             traditional: true,
         success: function(res){
-          window.location.href = "products.html";
+          window.location.href = "/products";
 
         },
         error: function(xhr , status){
@@ -118,7 +118,7 @@ function updateUser(id) {
 
   if (sendInfo.product_id) {
     $.ajax({
-        url: "http://127.0.0.1:5000/update_product",
+        url: "/update_product",
         type: "POST",
             dataType: 'json',
             contentType: "application/json; charset=utf-8",

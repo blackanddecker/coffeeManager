@@ -4,7 +4,7 @@ from flask_api import status
 import json 
 import datetime
 
-def login(request , connection):
+def login_user(request , connection):
     data = request.get_json()
     print(data)
     if request.method != 'POST':
