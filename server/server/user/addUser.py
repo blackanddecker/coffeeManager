@@ -34,7 +34,7 @@ def addUser(request , connection):
 
     except Exception as e: 
         print(e)
-        return 'Internal Server Error', status.HTTP_500_INTERNAL_SERVER_ERROR
+        return 'Email excists', status.HTTP_200_OK
 
     responce = 'OK'
     return responce, status.HTTP_200_OK

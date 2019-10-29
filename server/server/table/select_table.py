@@ -8,7 +8,7 @@ def select_table(shop_id , connection):
     try:       
         with connection.cursor() as cursor:
             sql = "SELECT * FROM shopmanager.table t , shopmanager.order o, shopmanager.employee e\
-                WHERE t.shop_id ={} AND o.table_id = t.id AND e.id = o.user_id;".format(shop_id)
+                WHERE t.shop_id ={} AND o.table_id = t.id AND e.id = o.employee_id;".format(shop_id)
             print(sql)
             cursor.execute(sql)
             result = cursor.fetchall()

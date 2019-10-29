@@ -14,13 +14,13 @@ def addShop(request , connection):
     try:       
         ## Find max id from DB
         with connection.cursor() as cursor:
-            sql = "SELECT max(idshop) as idshop FROM shopmanager.shop"
+            sql = "SELECT max(id) as idshop FROM shopmanager.shop"
             cursor.execute(sql)
-            max_id = int(cursor.fetchall()[0]['idshop']) + 1
-            print("Max product_id: " , max_id)
+            idshop = int(cursor.fetchall()[0]['idshop']) + 1
+            print("Max product_id: " , idshop)
 
-            sql = "INSERT INTO shopmanager.shop (idshop, name) VALUES ({}, '{}');".format(
-                    max_id, str(data['name']) )
+            sql = "INSERT INTO shopmanager.shop (id, name) VALUES ({}, '{}');".format(
+                    idshop, str(data['name']) )
             cursor.execute(sql)
             connection.commit()
 

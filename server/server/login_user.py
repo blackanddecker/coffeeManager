@@ -7,6 +7,7 @@ import datetime
 def login_user(request , connection):
     data = request.get_json()
     print(data)
+    result =[]
     if request.method != 'POST':
         return '', status.HTTP_406_NOT_ACCEPTABLE
     
@@ -19,7 +20,7 @@ def login_user(request , connection):
             if len(result) == 1 :
                 return result, status.HTTP_200_OK
             else: 
-                return result, status.HTTP_500_INTERNAL_SERVER_ERROR
+                return [], status.HTTP_200_OK
 
     except Exception as e: 
         print ("Internal Error ", e)
