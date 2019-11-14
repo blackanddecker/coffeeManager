@@ -1,10 +1,15 @@
 
 var users=[];
-selectUser();
-function selectUser(){
+selectOrder();
+function selectOrder(){
   var shop_id = localStorage.getItem('shop_id');
+  var start_date = '2009-10-28'
+  var end_date = '2029-10-28'
     var sendInfo = {
-      shop_id : parseInt (shop_id)
+      shop_id : parseInt (shop_id),
+      start_date : start_date,
+      end_date : end_date
+
      };
   $.ajax({
       url: "/select_order",
@@ -37,39 +42,39 @@ $("form").submit(function(e) {
 });
 
 //add
-$("form#addUser").submit(function() {
-  var shop_id = localStorage.getItem('shop_id');
-  var sendInfo = {
+// $("form#addUser").submit(function() {
+//   var shop_id = localStorage.getItem('shop_id');
+//   var sendInfo = {
 
-    name:$('#name').val(),
-    password: $('#password').val(),
-    email: $('#email').val(),
-    status: $('#status').val(),
-    shop_id : parseInt (shop_id)
-     };
+//     name:$('#name').val(),
+//     password: $('#password').val(),
+//     email: $('#email').val(),
+//     status: $('#status').val(),
+//     shop_id : parseInt (shop_id)
+//      };
 
-  if (sendInfo.name && sendInfo.password && sendInfo.email && sendInfo.status) {
-    $.ajax({
-        url: "/addUser",
-        type: "POST",
-            dataType: 'json',
-            contentType: "application/json; charset=utf-8",
-            traditional: true,
-        success: function(res){
-          window.location.href = "/users";
+//   if (sendInfo.name && sendInfo.password && sendInfo.email && sendInfo.status) {
+//     $.ajax({
+//         url: "/addUser",
+//         type: "POST",
+//             dataType: 'json',
+//             contentType: "application/json; charset=utf-8",
+//             traditional: true,
+//         success: function(res){
+//           window.location.href = "/users";
 
-        },
-        error: function(xhr , status){
-          document.write("<p>" +status+"</p>");
-        },
-        data: JSON.stringify(sendInfo)
-      });
-    } 
-    else {
-    alert("All fields must have a valid value.");
-  }
+//         },
+//         error: function(xhr , status){
+//           document.write("<p>" +status+"</p>");
+//         },
+//         data: JSON.stringify(sendInfo)
+//       });
+//     } 
+//     else {
+//     alert("All fields must have a valid value.");
+//   }
 
-});
+// });
 
 
 
@@ -134,28 +139,6 @@ function update_paid_order(id) {
     alert("All fields must have a valid value.");
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -260,7 +243,7 @@ function appendToUsrTable(user) {
             '<td class="userData" name="date_paid">${user.date_paid}</td>
 
             '<td align="center">
-                <button class="btn btn-success form-control" onClick="editUser(${user.id})" data-toggle="modal" data-target="#myModal")">More</button>
+                <button class="btn btn-success form-control" onClick="editUser(${user.id})" data-toggle="modal" data-target="#myModal")">Details</button>
             </td>
             '<td align="center">
                 <button class="btn btn-success form-control" onClick="update_delivered_order(${user.id})" )">Delivered</button>

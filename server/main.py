@@ -1,10 +1,8 @@
 import flask
-from flask import Flask
 from flask_httpauth import HTTPBasicAuth
 from flask_cors import CORS
 import pymysql.cursors
-from flask import render_template, request
-from flask import jsonify
+from flask import Flask, render_template, request, jsonify, url_for, redirect
 
 from server import login_user
 
@@ -38,8 +36,8 @@ auth = HTTPBasicAuth()
 
 
 def get_connection():
-
-    connection = pymysql.connect(host='35.228.7.51',
+    connection = pymysql.connect(host='127.0.0.1',
+    #connection = pymysql.connect(host='35.228.7.51',
              user='root',
              password='root',
              db='shopmanager',
@@ -102,9 +100,6 @@ def users():
 @app.route('/tables')
 def tables():
     return render_template('tables.html')
-
-
-
 
 
 #-------------------------------------------
