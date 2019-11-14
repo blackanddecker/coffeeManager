@@ -149,6 +149,8 @@ function update_paid_order(id) {
 
 
 
+
+
 // edit user form 
 function editUser(id) {
   users.forEach(function(user, i) {
@@ -243,7 +245,7 @@ function appendToUsrTable(user) {
             '<td class="userData" name="date_paid">${user.date_paid}</td>
 
             '<td align="center">
-                <button class="btn btn-success form-control" onClick="editUser(${user.id})" data-toggle="modal" data-target="#myModal")">Details</button>
+                <button class="btn btn-success form-control" onClick="editUser(${user.orderHistory})" data-toggle="modal" data-target="#myModal")">Details</button>
             </td>
             '<td align="center">
                 <button class="btn btn-success form-control" onClick="update_delivered_order(${user.id})" )">Delivered</button>

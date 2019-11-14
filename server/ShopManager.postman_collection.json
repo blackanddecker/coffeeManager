@@ -1,0 +1,543 @@
+{
+	"info": {
+		"_postman_id": "0313704f-fcd7-4b72-a62c-4557244e846d",
+		"name": "ShopManager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "shop",
+			"item": [
+				{
+					"name": "selectShop",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/selectShop",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"selectShop"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addShop",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"shop3\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/addShop",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"addShop"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "http://127.0.0.1:5000/addUser",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"empoyee4_1\", \n\t\"status\":\"admin\",\n\t\"shop_id\":1,\n\t\"email\":\"email2\",\n\t\"password\":\"password\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/addUser",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"addUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All selectUser",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/selectUser/0",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"selectUser",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:5000/updateUser",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"status\":\"employee\", \n\t\"name\":\"employee1_0_update\", \n\t\"id\":1\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/updateUser",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"updateUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/login",
+					"request": {
+						"auth": {
+							"type": "basic"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\":\"email\", \n\t\"password\":\"password\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/login_user",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"login_user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "select_product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/select_product/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"select_product",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"product1\",\n\t\"price\":21.8,\n\t\"available\":20,\n\t\"shop_id\":0,\n\t\"details\":\"details\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/add_product",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"add_product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"product_id\":3,\n\t\"name\":\"product1\",\n\t\"price\":21.8,\n\t\"available\":12,\n\t\"details\":\"details\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/update_product",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"update_product"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "select_order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"shop_id\":1, \n\t\"start_date\":\"2009-10-28\",\n\t\"end_date\":\"2021-10-28\"\n\t\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/select_order",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"select_order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"table_id\":0,\n\t\"user_id\":0,\n\t\"orderHistory\":[{\"product_id\":3, \"details\":\"sweet\"}, {\"product_id\":2, \"details\":\"bitter\"}],\n\t\"order_id\":-1\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/add_order",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"add_order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:5000/update_order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"order_id\":0,\n\t\"product_id\":3,\n\t\"details\":\"sweet\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/update_order",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"update_order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_delivered_order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"order_id\":1\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/update_delivered_order",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"update_delivered_order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:5000/update_paid_order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"order_id\":1\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/update_paid_order",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"update_paid_order"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "table",
+			"item": [
+				{
+					"name": "add_table",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"shop_id\":0\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/add_table",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"add_table"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "select_table",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/select_table/0",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"select_table",
+								"0"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
