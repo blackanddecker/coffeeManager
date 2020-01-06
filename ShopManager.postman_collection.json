@@ -48,7 +48,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\":\"shop1\"\n}"
+							"raw": "{\n\t\"name\":\"shop3\"\n}"
 						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/addShop",
@@ -86,7 +86,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\":\"user1\", \n\t\"status\":\"admin\",\n\t\"shop_id\":1,\n\t\"email\":\"email\",\n\t\"password\":\"password\"\n}"
+							"raw": "{\n\t\"name\":\"empoyee4_1\", \n\t\"status\":\"admin\",\n\t\"shop_id\":1,\n\t\"email\":\"email2\",\n\t\"password\":\"password\"\n}"
 						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/addUser",
@@ -107,6 +107,9 @@
 				},
 				{
 					"name": "All selectUser",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -115,7 +118,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/selectUser/1",
+							"raw": "http://127.0.0.1:5000/selectUser/0",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -126,7 +129,7 @@
 							"port": "5000",
 							"path": [
 								"selectUser",
-								"1"
+								"0"
 							]
 						}
 					},
@@ -146,7 +149,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"status\":\"employee\", \n\t\"name\":\"employee1\", \n\t\"idemployee\":1\n}"
+							"raw": "{\n\t\"status\":\"employee\", \n\t\"name\":\"employee1_0_update\", \n\t\"id\":1\n}"
 						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/updateUser",
@@ -182,10 +185,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\":\"name0@1.gr\", \n\t\"password\":\"1234\"\n}"
+							"raw": "{\n\t\"email\":\"email\", \n\t\"password\":\"password\"\n}"
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/login",
+							"raw": "http://127.0.0.1:5000/login_user",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -195,7 +198,7 @@
 							],
 							"port": "5000",
 							"path": [
-								"login"
+								"login_user"
 							]
 						}
 					},
@@ -318,7 +321,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"shop_id\":1\n}"
+							"raw": "{\n\t\"shop_id\":1, \n\t\"start_date\":\"2009-10-28\",\n\t\"end_date\":\"2021-10-28\"\n\t\n}"
 						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/select_order",
@@ -351,7 +354,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"table_id\":0,\n\t\"user_id\":0,\n\t\"product_id\":3,\n\t\"details\":\"sweet\"\n}"
+							"raw": "{\n\t\"table_id\":0,\n\t\"user_id\":0,\n\t\"orderHistory\":[{\"product_id\":3, \"details\":\"sweet\"}, {\"product_id\":2, \"details\":\"bitter\"}],\n\t\"order_id\":-1\n}"
 						},
 						"url": {
 							"raw": "http://127.0.0.1:5000/add_order",
@@ -517,7 +520,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://127.0.0.1:5000/select_table/1",
+							"raw": "http://127.0.0.1:5000/select_table/0",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -528,7 +531,7 @@
 							"port": "5000",
 							"path": [
 								"select_table",
-								"1"
+								"0"
 							]
 						}
 					},
