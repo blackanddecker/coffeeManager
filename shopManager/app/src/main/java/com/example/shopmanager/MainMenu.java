@@ -11,6 +11,11 @@ import android.content.Context;
 import android.content.Intent;
 
 public class MainMenu extends AppCompatActivity {
+    String name;
+    Integer id;
+    Integer shop_id;
+    String status;
+    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +28,12 @@ public class MainMenu extends AppCompatActivity {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         } else{
-            String email = extras.getString("email");
+            email = extras.getString("email");
             Log.d("MainMenu", email);
-            String name = extras.getString("name");
-            Integer id = extras.getInt("id");
-            Integer shop_id = extras.getInt("shop_id");
-            String status = extras.getString("status");
+            name = extras.getString("name");
+            id = extras.getInt("id");
+            shop_id = extras.getInt("shop_id");
+            status = extras.getString("status");
 
             // if one of them is null, ask credentials again
             if (email.isEmpty()) {
@@ -39,6 +44,13 @@ public class MainMenu extends AppCompatActivity {
     }
     public void addOrder(View v) {
         Intent intent = new Intent(this, AddOrder.class);
+
+        intent.putExtra("email", email);
+        intent.putExtra("id", id);
+        intent.putExtra("name", name);
+        intent.putExtra("status", status);
+        intent.putExtra("shop_id", shop_id);
+
         startActivityForResult(intent, 2);
     }
 
