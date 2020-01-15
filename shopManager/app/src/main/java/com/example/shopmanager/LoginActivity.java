@@ -19,9 +19,10 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.io.IOException;
-
+import java.lang.String;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -99,17 +100,30 @@ public class LoginActivity extends AppCompatActivity {
                     public void run() {
                         TextView responseTextLogin = findViewById(R.id.responseTextLogin);
                         try {
-                            String loginResponseString = response.body().string().trim();
-                            Log.d("LOGIN", "Response from the server : " + loginResponseString);
-                            if (loginResponseString.equals("success")) {
+                            Log.d("LOGIN", "Response from the server : " );
+                            String resStr = response.body().string();
+                            JSONArray responseObject = new JSONArray(resStr);
+                            JSONObject loginResponse = responseObject.getJSONObject(0);
+                            Log.d("LOGIN", "Response from the server! Done!" );
+                            Log.d("LOGIN", "Response from the server : " + loginResponse.getString("email"));
+
+                            if (loginResponse.length() != 0) {
                                 Log.d("LOGIN", "Successful Login");
-                                finish();//finishing activity and return to the calling activity.
-                            } else if (loginResponseString.equals("failure")) {
+
+                                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                                intent.putExtra("email", loginResponse.getString("email"));
+                                intent.putExtra("id", loginResponse.getInt("id"));
+                                intent.putExtra("name", loginResponse.getString("name"));
+                                intent.putExtra("status", loginResponse.getString("status"));
+                                intent.putExtra("shop_id", loginResponse.getInt("shop_id"));
+                                startActivity(intent);
+
+//                                finish();//finishing activity and return to the calling activity.
+                            } else
                                 responseTextLogin.setText("Login Failed. Invalid username or password.");
-                            }
                         } catch (Exception e) {
                             e.printStackTrace();
-                            responseTextLogin.setText("Something went wrong. Please try again later.");
+                            responseTextLogin.setText("Something went wrong. Please try again ");
                         }
                     }
                 });

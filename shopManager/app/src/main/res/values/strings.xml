@@ -3,4 +3,5 @@
     <string name="products">products</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_main_menu">MainMenu</string>
 </resources>
