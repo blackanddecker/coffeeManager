@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -103,15 +106,25 @@ public class AddOrder extends AppCompatActivity {
                     @Override
                     public void run() {
                         TextView responseTextLogin = findViewById(R.id.responseTextLogin);
+
                         try {
                             Log.d("selectOrder", "Response from the server : " );
                             String resStr = response.body().string();
                             JSONArray responseObject = new JSONArray(resStr);
-                            JSONObject loginResponse = responseObject.getJSONObject(0);
-                            Log.d("selectOrder", "Response from the server! Done!" );
 
-                            if (loginResponse.length() != 0) {
-                                Log.d("selectOrder", "Successful Login");
+                            ArrayList<String> productsList = new ArrayList<>();
+                            ListView simpleList;
+                            for(int i=0; i<responseObject.length(); i++) {
+                                JSONObject selectProductResponse = responseObject.getJSONObject(i);
+                                productsList.add(selectProductResponse.getString("name"));
+                                Log.d("selectOrder", selectProductResponse.getString("name") );
+                            }
+                            simpleList = (ListView)findViewById(R.id.simpleListView);
+                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(AddOrder.this, R.layout.activity_list_products, R.id.textView, productsList);
+                            simpleList.setAdapter(arrayAdapter);
+
+                            if (resStr.length() != 0) {
+                                Log.d("selectOrder", "Product Excists");
 
 //                                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
 //                                intent.putExtra("email", loginResponse.getString("email"));
@@ -123,7 +136,7 @@ public class AddOrder extends AppCompatActivity {
 
 //                                finish();//finishing activity and return to the calling activity.
                             } else
-                                responseTextLogin.setText("Login Failed. Invalid username or password.");
+                                responseTextLogin.setText("Select Product is empty");
                         } catch (Exception e) {
                             e.printStackTrace();
                             responseTextLogin.setText("Something went wrong. Please try again ");
