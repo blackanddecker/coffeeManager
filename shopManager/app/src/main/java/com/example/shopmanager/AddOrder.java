@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -113,7 +114,7 @@ public class AddOrder extends AppCompatActivity {
                             JSONArray responseObject = new JSONArray(resStr);
 
                             ArrayList<String> productsList = new ArrayList<>();
-                            ListView simpleList;
+                            final ListView simpleList;
                             for(int i=0; i<responseObject.length(); i++) {
                                 JSONObject selectProductResponse = responseObject.getJSONObject(i);
                                 productsList.add(selectProductResponse.getString("name"));
@@ -122,6 +123,15 @@ public class AddOrder extends AppCompatActivity {
                             simpleList = (ListView)findViewById(R.id.simpleListView);
                             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(AddOrder.this, R.layout.activity_list_products, R.id.textView, productsList);
                             simpleList.setAdapter(arrayAdapter);
+
+                            simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    String clickedItem=(String) simpleList.getItemAtPosition(position);
+
+
+                                }
+                            });
 
                             if (resStr.length() != 0) {
                                 Log.d("selectOrder", "Product Excists");

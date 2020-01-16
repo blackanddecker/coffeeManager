@@ -7,7 +7,13 @@
     <ListView
         android:id="@+id/simpleListView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="413dp"
         android:divider="@color/material_blue_grey_800"
         android:dividerHeight="1dp" />
+
+    <Button
+        android:id="@+id/sndOrderbtn"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:text="Send Order" />
 </LinearLayout>
