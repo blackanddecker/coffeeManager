@@ -45,14 +45,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        TextView responseText = findViewById(R.id.responseText);
-        if (requestCode == 2) { // Login
-            responseText.setText("Successful Login.");
-        } else {
-            responseText.setText("Invalid or no data entered. Please try again.");
-        }
-    }
 }

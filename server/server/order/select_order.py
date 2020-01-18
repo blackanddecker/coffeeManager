@@ -40,17 +40,17 @@ def select_order(request, connection):
         with connection.cursor() as cursor:
             sql = "CALL order_search('{}','{}',{},'{}','{}','{}','{}');".format(data['start_date'],\
                  data['end_date'], data['shop_id'],tables, order_status, employees, products )
-            print(sql)
+            #print(sql)
             cursor.execute(sql)
             orders = cursor.fetchall()
-            print(orders)
+            #print(orders)
 
             if len(orders)>0:
                 for order in orders: 
                     excists = False
                     for i in order_info: 
                         if order['id'] == i['id']:
-                            print("excists")
+                            #print("excists")
                             excists = True
                     if excists == False:
                         order_info.append(order)

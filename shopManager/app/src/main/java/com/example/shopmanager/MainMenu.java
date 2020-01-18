@@ -55,7 +55,14 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public void selectOrder(View v) {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        Intent intent = new Intent(this, SelectOrder.class);
+
+        intent.putExtra("email", email);
+        intent.putExtra("id", id);
+        intent.putExtra("name", name);
+        intent.putExtra("status", status);
+        intent.putExtra("shop_id", shop_id);
+
+        startActivityForResult(intent, 2);
     }
 }
