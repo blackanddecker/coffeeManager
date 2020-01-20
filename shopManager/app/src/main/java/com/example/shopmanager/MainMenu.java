@@ -43,7 +43,7 @@ public class MainMenu extends AppCompatActivity {
         }
     }
     public void addOrder(View v) {
-        Intent intent = new Intent(this, AddOrder.class);
+        Intent intent = new Intent(this, ChooseTable.class);
 
         intent.putExtra("email", email);
         intent.putExtra("id", id);

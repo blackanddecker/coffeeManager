@@ -20,6 +20,8 @@ from server.product import update_product
 #tables
 from server.table import add_table
 from server.table import select_table
+from server.table import show_tables
+
 #orders
 from server.order import add_order
 from server.order import select_order
@@ -231,7 +233,14 @@ def _select_table(shop_id):
     response.status_code = status
     return response
 
-
+@app.route('/show_tables/<shop_id>', methods=['GET'])
+#@auth.login_required
+def _show_tables(shop_id):
+    connection = get_connection()
+    content , status = show_tables.show_tables(shop_id, connection)
+    response = flask.jsonify(content)
+    response.status_code = status
+    return response
 #--------------------------------------------------------------------_Order
 
 

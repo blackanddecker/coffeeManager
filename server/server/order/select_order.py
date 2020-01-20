@@ -63,7 +63,7 @@ def select_order(request, connection):
                     cursor.execute(sql)
                     orderDetails = cursor.fetchall()
                     order['orderHistory']=orderDetails
-
+            print(order_info)
             return order_info, status.HTTP_200_OK
     except Exception as e: 
         print ("Internal Error ", e)

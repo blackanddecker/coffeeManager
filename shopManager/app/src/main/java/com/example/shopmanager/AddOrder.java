@@ -33,6 +33,7 @@ public class AddOrder extends AppCompatActivity {
     Integer shop_id;
     String status;
     String email;
+    Integer table_id;
     JSONArray orderHistory = new JSONArray();
 
     @Override
@@ -52,6 +53,7 @@ public class AddOrder extends AppCompatActivity {
             id = extras.getInt("id");
             shop_id = extras.getInt("shop_id");
             status = extras.getString("status");
+            table_id = extras.getInt("table_id");
 
             // if one of them is null, ask credentials again
             if (email.isEmpty()) {
@@ -79,7 +81,7 @@ public class AddOrder extends AppCompatActivity {
 
         JSONObject sendOrderForm = new JSONObject();
         try {
-            sendOrderForm.put("table_id", 0);
+            sendOrderForm.put("table_id", table_id);
             sendOrderForm.put("orderHistory", orderHistory);
             sendOrderForm.put("order_id", -1);
             sendOrderForm.put("user_id", id);
@@ -217,9 +219,12 @@ public class AddOrder extends AppCompatActivity {
 
                                             if (clickedItem == selectProductResponse.getString("name") ){
                                                 try {
-                                                    Log.d("selectedlickedItem1","Add Object" );
+                                                    EditText details = findViewById(R.id.detailsInput);
+                                                    String productDetails = details.getText().toString().trim();
+
+                                                    Log.d("Details",productDetails);
                                                     orderObject.put("product_id", selectProductResponse.getInt("id"));
-                                                    orderObject.put("details", "sweet");
+                                                    orderObject.put("details", productDetails);
 
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
@@ -235,20 +240,6 @@ public class AddOrder extends AppCompatActivity {
                                 }
                             });
 
-//                            if (resStr.length() != 0) {
-//                                Log.d("selectOrder", "Product Excists");
-//
-////                                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
-////                                intent.putExtra("email", loginResponse.getString("email"));
-////                                intent.putExtra("id", loginResponse.getInt("id"));
-////                                intent.putExtra("name", loginResponse.getString("name"));
-////                                intent.putExtra("status", loginResponse.getString("status"));
-////                                intent.putExtra("shop_id", loginResponse.getInt("shop_id"));
-////                                startActivity(intent);
-//
-////                                finish();//finishing activity and return to the calling activity.
-//                            } else
-//                                responseTextLogin.setText("Select Product is empty");
                         } catch (Exception e) {
                             e.printStackTrace();
                             responseTextLogin.setText("Something went wrong. Please try again ");

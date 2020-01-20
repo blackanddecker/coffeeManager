@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".listOrders"></activity>
+        <activity android:name=".listTables"></activity>
+        <activity android:name=".ChooseTable" />
+        <activity android:name=".listOrders" />
         <activity android:name=".SelectOrder" />
         <activity android:name=".listProducts" />
         <activity android:name=".AddOrder" />
