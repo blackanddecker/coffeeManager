@@ -5,6 +5,7 @@ import pymysql.cursors
 from flask import Flask, render_template, request, jsonify, url_for, redirect
 
 from server import login_user
+from server import login_mobile
 
 #shops
 from server.shop import addShop
@@ -70,7 +71,6 @@ def login():
 @app.route('/login_user', methods=['POST'])
 #@auth.login_required
 def _login_user():
-    print("in login user") 
     connection = get_connection()
     content , status = login_user.login_user(request, connection)
     response = flask.jsonify(content)
@@ -78,6 +78,15 @@ def _login_user():
     print(status)
     return response
 
+@app.route('/login_mobile', methods=['POST'])
+#@auth.login_required
+def _login_mobile():
+    connection = get_connection()
+    content , status = login_mobile.login_mobile(request, connection)
+    response = flask.jsonify(content)
+    response.status_code = status
+    print(status)
+    return response
 
 @app.route('/orders')
 def orders():

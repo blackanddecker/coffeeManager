@@ -1,16 +1,11 @@
-
 var users=[];
 selectOrder();
+
 function selectOrder(){
   var shop_id = localStorage.getItem('shop_id');
-  var start_date = '2009-10-28'
-  var end_date = '2029-10-28'
-    var sendInfo = {
-      shop_id : parseInt (shop_id),
-      start_date : start_date,
-      end_date : end_date
-
-     };
+  var start_date = '2009-10-28';
+  var end_date = '2029-10-28';
+  var sendInfo = {shop_id : parseInt (shop_id), start_date : start_date,end_date : end_date };
   $.ajax({
       url: "/select_order",
       type: "POST",
@@ -29,6 +24,7 @@ function selectOrder(){
       data: JSON.stringify(sendInfo)
 
   });
+  console.log("OK")
 
 };
 
@@ -41,40 +37,7 @@ $("form").submit(function(e) {
   e.preventDefault();
 });
 
-//add
-// $("form#addUser").submit(function() {
-//   var shop_id = localStorage.getItem('shop_id');
-//   var sendInfo = {
 
-//     name:$('#name').val(),
-//     password: $('#password').val(),
-//     email: $('#email').val(),
-//     status: $('#status').val(),
-//     shop_id : parseInt (shop_id)
-//      };
-
-//   if (sendInfo.name && sendInfo.password && sendInfo.email && sendInfo.status) {
-//     $.ajax({
-//         url: "/addUser",
-//         type: "POST",
-//             dataType: 'json',
-//             contentType: "application/json; charset=utf-8",
-//             traditional: true,
-//         success: function(res){
-//           window.location.href = "/users";
-
-//         },
-//         error: function(xhr , status){
-//           document.write("<p>" +status+"</p>");
-//         },
-//         data: JSON.stringify(sendInfo)
-//       });
-//     } 
-//     else {
-//     alert("All fields must have a valid value.");
-//   }
-
-// });
 
 
 
@@ -153,30 +116,26 @@ function update_paid_order(id) {
 
 // edit user form 
 function editUser(id) {
-  users.forEach(function(user, i) {
-    if (user.id == id) {
+  
+    // if (user.id == id) {
+      console.log("In editUser")
       $(".modal-body").empty().append(`
                 <form id="updateUser" action="">
-                    
                     <label for="name">Name</label>
-                    <input class="form-control" type="text" name="name" value="${user.name}"/>
-                    
-                    <label for="status">Status</label>
-                    <input class="form-control" type="text" name="status" value="${user.status}"/>
-                    
-                    <label for="email">Email</label>
-                    <input class="form-control" type="text" name="email" value="${user.email}"/>
-                    
-                    <label for="details">Password</label>
-                    <input class="form-control" type="text" name="password" value="${user.password}"/>
+                    <input class="form-control" type="text" name="name" value="${id.status}"/>
+                    <label for="price">Price</label>
+                    <input class="form-control" type="number" name="price" value="${id.price}"/>
+                    <label for="available">Available</label>
+                    <input class="form-control" type="number" name="available" value="${id.no_table}"/>
+                    <label for="details">Details</label>
+                    <input class="form-control" type="text" name="details" value="${id.date_paid}"/>
             `);
       $(".modal-footer").empty().append(`
-                    <button type="button" type="submit" class="btn btn-primary" onClick="updateUser(${id})">Save changes</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </form>
             `);
-    }
-  });
+    // }
+
 }
 
 
@@ -245,7 +204,7 @@ function appendToUsrTable(user) {
             '<td class="userData" name="date_paid">${user.date_paid}</td>
 
             '<td align="center">
-                <button class="btn btn-success form-control" onClick="editUser(${user.orderHistory})" data-toggle="modal" data-target="#myModal")">Details</button>
+                <button class="btn btn-success form-control" onClick="editUser(${user.id})" data-toggle="modal" data-target="#myModal")">Details</button>
             </td>
             '<td align="center">
                 <button class="btn btn-success form-control" onClick="update_delivered_order(${user.id})" )">Delivered</button>

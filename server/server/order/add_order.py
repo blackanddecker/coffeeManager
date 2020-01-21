@@ -50,6 +50,27 @@ def add_order(request, connection):
                     cursor.execute(sql)
                     connection.commit()
 
+                #update price
+                with connection.cursor() as cursor:
+                    sql = "SELECT SUM(p.price) FROM shopmanager.order o, shopmanager.product p , shopmanager.orderinfo i\
+                    WHERE p.id = i.product_id AND i.order_id = o.id AND o.id={} AND p.shop_id={};".format(order_id, data['shop_id'])
+                    print(sql)
+                    cursor.execute(sql)
+                    result = cursor.fetchall()
+                    price = result[0]['SUM(p.price)']
+                    print(price)
+                    if price is None: 
+                        price =0 
+                with connection.cursor() as cursor:
+                    sql = "UPDATE shopmanager.order SET price= {} WHERE id={};".format(price,order_id)
+                    print(sql)
+                    cursor.execute(sql)
+                    connection.commit()
+
+    except Exception as e: 
+        print ("Internal Error ", e)
+        return 'Internal Server Error', status.HTTP_500_INTERNAL_SERVER_ERROR
+
     except Exception as e: 
         print ("Internal Error ", e)
         return 'Internal Server Error', status.HTTP_500_INTERNAL_SERVER_ERROR

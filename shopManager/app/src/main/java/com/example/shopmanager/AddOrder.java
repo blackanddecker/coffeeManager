@@ -85,6 +85,7 @@ public class AddOrder extends AppCompatActivity {
             sendOrderForm.put("orderHistory", orderHistory);
             sendOrderForm.put("order_id", -1);
             sendOrderForm.put("user_id", id);
+            sendOrderForm.put("shop_id", shop_id);
 
         } catch (JSONException e) {
             e.printStackTrace();

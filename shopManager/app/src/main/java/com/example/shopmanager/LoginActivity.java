@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
 
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), loginForm.toString());
 
-        postRequest(MainActivity.postUrl+"/login_user", body);
+        postRequest(MainActivity.postUrl+"/login_mobile", body);
     }
 
     public void postRequest(String postUrl, RequestBody postBody) {

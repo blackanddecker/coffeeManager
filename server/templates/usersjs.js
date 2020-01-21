@@ -108,12 +108,12 @@ function updateUser(id) {
         if (attr == "name") {
           sendInfo.name = value;
         } else if (attr == "status") {
-          sendInfo.status = parseInt(value);
+          sendInfo.status = value;
         } else if (attr == "email") {
           sendInfo.email = value;
         }
          else if (attr == "password") {
-          sendInfo.password = parseInt(value);
+          sendInfo.password = value;
         }
         sendInfo.id =id
       });
