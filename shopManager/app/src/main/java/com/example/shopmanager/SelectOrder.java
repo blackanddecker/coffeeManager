@@ -18,6 +18,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -60,12 +61,16 @@ public class SelectOrder extends AppCompatActivity {
     }
 
     public void selectOrder() {
-
         JSONObject sendOrderForm = new JSONObject();
+        List<String> listOr = new ArrayList<>();
+        listOr.add("pending");
+        listOr.add("delivered");
+
         try {
             sendOrderForm.put("end_date", "2021-10-28");
             sendOrderForm.put("start_date", "2009-10-28");
             sendOrderForm.put("shop_id", id);
+//            sendOrderForm.put("status",listOr);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -121,7 +126,7 @@ public class SelectOrder extends AppCompatActivity {
             }
 
             @Override
-            public void onResponse(Call call, final Response response) throws IOException {
+            public void onResponse(Call call, final Response response) {
                 // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
                 runOnUiThread(new Runnable() {
                     @Override
@@ -176,7 +181,7 @@ public class SelectOrder extends AppCompatActivity {
             }
 
             @Override
-            public void onResponse(Call call, final Response response) throws IOException {
+            public void onResponse(Call call, final Response response) {
                 // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
                 runOnUiThread(new Runnable() {
                     @Override
@@ -194,7 +199,7 @@ public class SelectOrder extends AppCompatActivity {
                                 JSONObject selectProductResponse = responseObject.getJSONObject(i);
                                 ordersList.add(selectProductResponse.getString("id")+"-"+selectProductResponse.getString("no_table")+"-"+selectProductResponse.getString("status"));
                             }
-                            simpleList = (ListView)findViewById(R.id.orderListView);
+                            simpleList = findViewById(R.id.orderListView);
                             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(SelectOrder.this, R.layout.activity_list_orders, R.id.textView, ordersList);
                             simpleList.setAdapter(arrayAdapter);
 

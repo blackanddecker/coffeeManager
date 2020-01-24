@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.shopmanager">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,13 +13,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".listTables"></activity>
         <activity android:name=".ChooseTable" />
         <activity android:name=".listOrders" />
         <activity android:name=".SelectOrder" />
         <activity android:name=".listProducts" />
-        <activity android:name=".AddOrder" />
         <activity
             android:name=".MainMenu"
             android:label="@string/title_activity_main_menu"
@@ -31,6 +32,9 @@
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddOrder"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
