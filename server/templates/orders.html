@@ -30,11 +30,28 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Details</h4>
       </div>
-      <div class="modal-body"></div>
-      <div class="modal-footer"></div>
+      <div class="modal-body">
+
+        <table id="infoTable" class="table table-striped">
+          <tr>
+            <th>Name</th>
+            <th>Details</th>
+           </tr>
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <script>
+          function Init(){
+            console.log("init")
+            $("#infoTable tr").remove(); 
+          }
+          </script>
+        <button type="button" class="close" data-dismiss="modal" onClick="Init()">Close</button>
+
+      </div>
     </div>
   </div>
 </div>

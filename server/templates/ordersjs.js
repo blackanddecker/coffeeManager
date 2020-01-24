@@ -1,6 +1,18 @@
 var users=[];
 selectOrder();
 
+function compare( a, b ) {
+  if ( a.status > b.status ){
+    return -1;
+  }
+  if ( a.status < b.status ){
+    return 1;
+  }
+  return 0;
+}
+
+
+
 function selectOrder(){
   var shop_id = localStorage.getItem('shop_id');
   var start_date = '2009-10-28';
@@ -14,6 +26,7 @@ function selectOrder(){
       traditional: true,      
       success: function(res){
         users = res;
+        users.sort( compare );
         for (i=0; i< users.length ; i++){
           appendToUsrTable(users[i]);
         }
@@ -31,6 +44,10 @@ function selectOrder(){
 
 $.each(users, function(i, user) {
   appendToUsrTable(user);
+});
+
+$.each(users, function(i, user) {
+  appendToOrder(user);
 });
 
 $("form").submit(function(e) {
@@ -63,6 +80,36 @@ function update_delivered_order(id) {
         success: function(res){
           window.location.href = "orders";
         },
+        error: function(xhr , status){
+          document.write("<p>" +status+"</p>");
+        },
+        data: JSON.stringify(sendInfo)
+      });
+    } 
+    else {
+    alert("All fields must have a valid value.");
+  }
+}
+
+function info(id) {
+  
+  var msg = "User updated successfully!";
+  var sendInfo={};
+
+  sendInfo.order_id =id
+
+  if (sendInfo.order_id) {
+    $.ajax({
+        url: "/order_info",
+        type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+        success: function(res){
+          users = res;
+          for (i=0; i< users.length ; i++){
+            appendToOrder(users[i]);
+          }        },
         error: function(xhr , status){
           document.write("<p>" +status+"</p>");
         },
@@ -112,33 +159,24 @@ function update_paid_order(id) {
 
 
 
-
-
 // edit user form 
-function editUser(id) {
+function appendToOrder(user) {
   
-    // if (user.id == id) {
-      console.log("In editUser")
-      $(".modal-body").empty().append(`
-                <form id="updateUser" action="">
-                    <label for="name">Name</label>
-                    <input class="form-control" type="text" name="name" value="${id.status}"/>
-                    <label for="price">Price</label>
-                    <input class="form-control" type="number" name="price" value="${id.price}"/>
-                    <label for="available">Available</label>
-                    <input class="form-control" type="number" name="available" value="${id.no_table}"/>
-                    <label for="details">Details</label>
-                    <input class="form-control" type="text" name="details" value="${id.date_paid}"/>
-            `);
-      $(".modal-footer").empty().append(`
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </form>
-            `);
-    // }
-
+      console.log("appendToOrder", user)
+      $("#infoTable > tbody:last-child").append(`
+           <tr id="user-${user.o_info}">
+           '<td class="info" name="name">${user.name}</td>
+           '<td class="info" name="details">${user.details}</td>
+        </tr>
+`);
 }
 
 
+//    <tr id="user-${user.order_id}">
+//     <td class="userData" name="name">${user.name}</td>
+//     <td class="userData" name="status">${user.details}</td>
+// </tr>
+// <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 function updateUser(id) {
   
   var msg = "User updated successfully!";
@@ -202,7 +240,9 @@ function appendToUsrTable(user) {
             '<td class="userData" name="price">${user.price}</td>
             '<td class="userData" name="no_table">${user.no_table}</td>
             '<td class="userData" name="date_paid">${user.date_paid}</td>
-
+            '<td align="center">
+                <button class="btn btn-success form-control" onClick="info(${user.id})" data-toggle="modal" data-target="#myModal")">INFO</button>
+            </td>
             '<td align="center">
                 <button class="btn btn-success form-control" onClick="update_delivered_order(${user.id})" )">Delivered</button>
             </td>

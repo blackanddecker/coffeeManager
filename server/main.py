@@ -29,6 +29,7 @@ from server.order import select_order
 from server.order import update_order
 from server.order import update_paid_order
 from server.order import update_delivered_order
+from server.order import order_info
 
 
 
@@ -232,6 +233,16 @@ def _add_table():
     response = flask.jsonify(content)
     response.status_code = status
     return response
+
+@app.route('/order_info', methods=['POST'])
+#@auth.login_required
+def _info_order():
+    connection = get_connection()
+    content , status = order_info.order_info(request, connection)
+    response = flask.jsonify(content)
+    response.status_code = status
+    return response
+
 
 @app.route('/select_table/<shop_id>', methods=['GET'])
 #@auth.login_required
