@@ -1,16 +1,16 @@
 package com.example.shopmanager;
 
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +29,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class SelectOrder extends AppCompatActivity {
+    RequestBody body;
+    String postUrl;
     String name;
     Integer id;
     Integer shop_id;
@@ -57,10 +59,21 @@ public class SelectOrder extends AppCompatActivity {
             // if one of them is null, ask credentials again
             if (email.isEmpty()) Log.d("Add Order", "No variables");
         }
-        selectOrder();
-    }
 
-    public void selectOrder() {
+
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            //your codes here
+
+        }
+
+
+
+
         JSONObject sendOrderForm = new JSONObject();
         List<String> listOr = new ArrayList<>();
         listOr.add("pending");
@@ -77,10 +90,91 @@ public class SelectOrder extends AppCompatActivity {
         }
         Log.d("SendOrder", String.valueOf(sendOrderForm));
 
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), sendOrderForm.toString());
+        body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), sendOrderForm.toString());
 
-        postSelectRequestOrder(MainActivity.postUrl+"/select_order", body);
+
+        PostSelectRequestOrder selectOrd = new PostSelectRequestOrder();
+        postUrl = MainActivity.postUrl+"/select_order";
+        selectOrd.execute(postUrl);
+
     }
+    private class PostSelectRequestOrder extends AsyncTask<String, Integer,String> {
+        @Override
+        protected String doInBackground(String... username) {
+//            public void postSelectRequestOrder (String postUrl, RequestBody postBody){
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url(postUrl)
+                    .post(body)
+                    .header("Accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .build();
+
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    // Cancel the post on failure.
+                    call.cancel();
+                    Log.d("FAIL", e.getMessage());
+
+                    Intent intent = new Intent(getApplicationContext(), MainMenu.class);
+                    intent.putExtra("email", email);
+                    intent.putExtra("id", id);
+                    intent.putExtra("name", name);
+                    intent.putExtra("status", status);
+                    intent.putExtra("shop_id", shop_id);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onResponse(Call call, final Response response) {
+                    // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                final String resStr = response.body().string();
+                                Log.d("selectOrder", "Response from the server : "+resStr);
+
+                                final JSONArray responseObject = new JSONArray(resStr);
+
+                                ArrayList<String> ordersList = new ArrayList<>();
+                                final ListView simpleList;
+                                for (int i = 0; responseObject.length() > i; i++) {
+                                    JSONObject selectProductResponse = responseObject.getJSONObject(i);
+                                    ordersList.add(selectProductResponse.getString("id") + "-" + selectProductResponse.getString("no_table") + "-" + selectProductResponse.getString("status"));
+                                }
+                                simpleList = findViewById(R.id.orderListView);
+                                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(SelectOrder.this, R.layout.activity_list_orders, R.id.textView, ordersList);
+                                simpleList.setAdapter(arrayAdapter);
+
+                                simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        String[] arrOfStr = ((String) simpleList.getItemAtPosition(position)).split("-", 0);
+                                        Log.d("selectedlickedItem0", String.valueOf(arrOfStr));
+                                        Log.d("selectedlickedItem1", String.valueOf(arrOfStr[0]));
+
+                                        clickedItem = arrOfStr[0];
+                                        Log.d("selectedlickedItem2", clickedItem);
+                                    }
+                                });
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+                }
+            });
+            return("");
+        }
+
+    }
+
+
 
     public void updatePaidorder(View v) {
 
@@ -99,11 +193,11 @@ public class SelectOrder extends AppCompatActivity {
     }
 
 
-    public void postUpdateRequestOrder(String postUrl, RequestBody postBody) {
+    public void postUpdateRequestOrder(String postUrl2, RequestBody postBody) {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url(postUrl)
+                .url(postUrl2)
                 .post(postBody)
                 .header("Accept", "application/json")
                 .header("Content-Type", "application/json")
@@ -154,74 +248,5 @@ public class SelectOrder extends AppCompatActivity {
             }
         });
     }
-    public void postSelectRequestOrder(String postUrl, RequestBody postBody) {
-        OkHttpClient client = new OkHttpClient();
 
-        Request request = new Request.Builder()
-                .url(postUrl)
-                .post(postBody)
-                .header("Accept", "application/json")
-                .header("Content-Type", "application/json")
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                // Cancel the post on failure.
-                call.cancel();
-                Log.d("FAIL", e.getMessage());
-
-                Intent intent = new Intent(getApplicationContext(), MainMenu.class);
-                intent.putExtra("email", email);
-                intent.putExtra("id", id);
-                intent.putExtra("name", name);
-                intent.putExtra("status", status);
-                intent.putExtra("shop_id", shop_id);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onResponse(Call call, final Response response) {
-                // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        final TextView responseTextLogin = findViewById(R.id.responseTextLogin);
-
-                        try {
-                            Log.d("selectOrder", "Response from the server : " );
-                            final String resStr = response.body().string();
-                            final JSONArray responseObject = new JSONArray(resStr);
-
-                            ArrayList<String> ordersList = new ArrayList<>();
-                            final ListView simpleList;
-                            for(int i = 0; responseObject.length() > i; i++) {
-                                JSONObject selectProductResponse = responseObject.getJSONObject(i);
-                                ordersList.add(selectProductResponse.getString("id")+"-"+selectProductResponse.getString("no_table")+"-"+selectProductResponse.getString("status"));
-                            }
-                            simpleList = findViewById(R.id.orderListView);
-                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(SelectOrder.this, R.layout.activity_list_orders, R.id.textView, ordersList);
-                            simpleList.setAdapter(arrayAdapter);
-
-                            simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    String[] arrOfStr = ((String)simpleList.getItemAtPosition(position)).split("-", 0);
-                                    Log.d("selectedlickedItem0", String.valueOf(arrOfStr));
-                                    Log.d("selectedlickedItem1", String.valueOf(arrOfStr[0]));
-
-                                    clickedItem = arrOfStr[0];
-                                    Log.d("selectedlickedItem2",clickedItem  );
-                                }
-                            });
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
-            }
-        });
-    }
 }
