@@ -16,6 +16,7 @@
         android:dividerHeight="1dp"
         app:layout_constraintBottom_toTopOf="@+id/chooseTableId"
         app:layout_constraintTop_toTopOf="parent"
+        android:listSelector="@android:color/holo_red_dark"
         tools:ignore="MissingConstraints" />
 
     <Button

@@ -35,7 +35,8 @@ public class AddOrder extends AppCompatActivity {
     String email;
     Integer table_id;
     JSONArray orderHistory = new JSONArray();
-
+    JSONArray responseObject = new JSONArray();
+    String clickedItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +96,47 @@ public class AddOrder extends AppCompatActivity {
         RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), sendOrderForm.toString());
 
         postRequestOrder(MainActivity.postUrl+"/add_order", body);
+    }
+
+    public void addProductonClick(View v) {
+        try {
+
+            JSONObject orderObject = new JSONObject();
+
+            for (int i = 0; i < responseObject.length(); i++) {
+                JSONObject selectProductResponse = null;
+                try {
+                    selectProductResponse = responseObject.getJSONObject(i);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    Log.d("selectedlickedItem1", clickedItem);
+                    Log.d("selectedlickedItem2", selectProductResponse.getString("name"));
+
+                    if (clickedItem == selectProductResponse.getString("name")) {
+                        try {
+                            EditText details = findViewById(R.id.detailsInput);
+                            String productDetails = details.getText().toString().trim();
+
+                            Log.d("Details", productDetails);
+                            orderObject.put("product_id", selectProductResponse.getInt("id"));
+                            orderObject.put("details", productDetails);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            Log.d("selectedlickedItem1", "Here");
+            orderHistory.put(orderObject);
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void postRequestOrder(String postUrl, RequestBody postBody) {
@@ -187,7 +229,7 @@ public class AddOrder extends AppCompatActivity {
                         try {
                             Log.d("selectOrder", "Response from the server : " );
                             final String resStr = response.body().string();
-                            final JSONArray responseObject = new JSONArray(resStr);
+                            responseObject = new JSONArray(resStr);
 
                             ArrayList<String> productsList = new ArrayList<>();
                             final ListView simpleList;
@@ -203,40 +245,8 @@ public class AddOrder extends AppCompatActivity {
                             simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    String clickedItem=(String) simpleList.getItemAtPosition(position);
+                                    clickedItem=(String) simpleList.getItemAtPosition(position);
                                     Log.d("selectedlickedItem",clickedItem );
-                                    JSONObject orderObject = new JSONObject();
-
-                                    for(int i=0; i<responseObject.length(); i++) {
-                                        JSONObject selectProductResponse = null;
-                                        try {
-                                            selectProductResponse = responseObject.getJSONObject(i);
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                        try {
-                                            Log.d("selectedlickedItem1",clickedItem );
-                                            Log.d("selectedlickedItem2",selectProductResponse.getString("name") );
-
-                                            if (clickedItem == selectProductResponse.getString("name") ){
-                                                try {
-                                                    EditText details = findViewById(R.id.detailsInput);
-                                                    String productDetails = details.getText().toString().trim();
-
-                                                    Log.d("Details",productDetails);
-                                                    orderObject.put("product_id", selectProductResponse.getInt("id"));
-                                                    orderObject.put("details", productDetails);
-
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                    Log.d("selectedlickedItem1","Here" );
-                                    orderHistory.put( orderObject);
 
                                 }
                             });

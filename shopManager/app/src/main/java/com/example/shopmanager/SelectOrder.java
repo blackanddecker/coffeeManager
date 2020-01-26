@@ -75,15 +75,12 @@ public class SelectOrder extends AppCompatActivity {
 
 
         JSONObject sendOrderForm = new JSONObject();
-        List<String> listOr = new ArrayList<>();
-        listOr.add("pending");
-        listOr.add("delivered");
+        List<String> listOr = new ArrayList<String>();
 
         try {
             sendOrderForm.put("end_date", "2021-10-28");
             sendOrderForm.put("start_date", "2009-10-28");
             sendOrderForm.put("shop_id", id);
-//            sendOrderForm.put("status",listOr);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -143,7 +140,9 @@ public class SelectOrder extends AppCompatActivity {
                                 final ListView simpleList;
                                 for (int i = 0; responseObject.length() > i; i++) {
                                     JSONObject selectProductResponse = responseObject.getJSONObject(i);
-                                    ordersList.add(selectProductResponse.getString("id") + "-" + selectProductResponse.getString("no_table") + "-" + selectProductResponse.getString("status"));
+                                    if (selectProductResponse.getString("status").equals("paid") == false){
+                                        ordersList.add(selectProductResponse.getString("id") + "-" + selectProductResponse.getString("table_id") + "-" + selectProductResponse.getString("status"));
+                                    }
                                 }
                                 simpleList = findViewById(R.id.orderListView);
                                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(SelectOrder.this, R.layout.activity_list_orders, R.id.textView, ordersList);
@@ -231,7 +230,7 @@ public class SelectOrder extends AppCompatActivity {
 
                             Log.d("Paid", "Successful paid");
 
-                            Intent intent = new Intent(getApplicationContext(), SelectOrder.class);
+                            Intent intent = new Intent(getApplicationContext(), MainMenu.class);
                             intent.putExtra("email", email);
                             intent.putExtra("id", id);
                             intent.putExtra("name", name);
