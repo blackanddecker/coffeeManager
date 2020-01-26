@@ -238,7 +238,7 @@ function appendToUsrTable(user) {
             <td class="userData" name="name">${user.id}</td>
             '<td class="userData" name="status">${user.status}</td>
             '<td class="userData" name="price">${user.price}</td>
-            '<td class="userData" name="no_table">${user.no_table}</td>
+            '<td class="userData" name="no_table">${user.table_id}</td>
             '<td class="userData" name="date_paid">${user.date_paid}</td>
             '<td align="center">
                 <button class="btn btn-success form-control" onClick="info(${user.id})" data-toggle="modal" data-target="#myModal")">INFO</button>
