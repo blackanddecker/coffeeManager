@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -71,9 +72,6 @@ public class SelectOrder extends AppCompatActivity {
 
         }
 
-
-
-
         JSONObject sendOrderForm = new JSONObject();
         List<String> listOr = new ArrayList<String>();
 
@@ -112,6 +110,8 @@ public class SelectOrder extends AppCompatActivity {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     // Cancel the post on failure.
+                    Toast.makeText(getApplicationContext(), "Server Error.", Toast.LENGTH_LONG).show();
+
                     call.cancel();
                     Log.d("FAIL", e.getMessage());
 
@@ -161,6 +161,7 @@ public class SelectOrder extends AppCompatActivity {
                                 });
 
                             } catch (Exception e) {
+                                Toast.makeText(getApplicationContext(), "Check Inputs", Toast.LENGTH_LONG).show();
                                 e.printStackTrace();
                             }
                         }
@@ -205,6 +206,8 @@ public class SelectOrder extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                Toast.makeText(getApplicationContext(), "Check Inputs.", Toast.LENGTH_LONG).show();
+
                 // Cancel the post on failure.
                 call.cancel();
                 Log.d("FAIL", e.getMessage());
@@ -220,11 +223,11 @@ public class SelectOrder extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, final Response response) {
+
                 // In order to access the TextView inside the UI thread, the code is executed inside runOnUiThread()
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        TextView responseTextLogin = findViewById(R.id.responseTextLogin);
                         try {
                             String resStr = response.body().string();
 
@@ -239,6 +242,8 @@ public class SelectOrder extends AppCompatActivity {
                             startActivity(intent);
 
                         } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), "Check Inputs", Toast.LENGTH_LONG).show();
+
                             e.printStackTrace();
                         }
                     }

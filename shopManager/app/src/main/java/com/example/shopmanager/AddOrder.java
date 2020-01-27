@@ -79,23 +79,28 @@ public class AddOrder extends AppCompatActivity {
         getRequest(MainActivity.postUrl+"/select_product/"+shop_id, body);
     }
     public void sendOrder(View v) {
+        if (orderHistory.length() > 0 ) {
+            JSONObject sendOrderForm = new JSONObject();
+            try {
+                sendOrderForm.put("table_id", table_id);
+                sendOrderForm.put("orderHistory", orderHistory);
+                sendOrderForm.put("order_id", -1);
+                sendOrderForm.put("user_id", id);
+                sendOrderForm.put("shop_id", shop_id);
 
-        JSONObject sendOrderForm = new JSONObject();
-        try {
-            sendOrderForm.put("table_id", table_id);
-            sendOrderForm.put("orderHistory", orderHistory);
-            sendOrderForm.put("order_id", -1);
-            sendOrderForm.put("user_id", id);
-            sendOrderForm.put("shop_id", shop_id);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.d("SendOrder", String.valueOf(sendOrderForm));
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), sendOrderForm.toString());
+
+            postRequestOrder(MainActivity.postUrl + "/add_order", body);
         }
-        Log.d("SendOrder", String.valueOf(sendOrderForm));
+        else{
+            Toast.makeText(getApplicationContext(), "Empty order", Toast.LENGTH_LONG).show();
 
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), sendOrderForm.toString());
-
-        postRequestOrder(MainActivity.postUrl+"/add_order", body);
+        }
     }
 
     public void addProductonClick(View v) {
@@ -122,12 +127,17 @@ public class AddOrder extends AppCompatActivity {
                             Log.d("Details", productDetails);
                             orderObject.put("product_id", selectProductResponse.getInt("id"));
                             orderObject.put("details", productDetails);
+                            Toast.makeText(getApplicationContext(), "Add", Toast.LENGTH_LONG).show();
+
 
                         } catch (JSONException e) {
+                            Toast.makeText(getApplicationContext(), "Check Inputs", Toast.LENGTH_LONG).show();
                             e.printStackTrace();
                         }
                     }
                 } catch (JSONException e) {
+                    Toast.makeText(getApplicationContext(), "Check Inputs", Toast.LENGTH_LONG).show();
+
                     e.printStackTrace();
                 }
             }
@@ -152,6 +162,8 @@ public class AddOrder extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                Toast.makeText(getApplicationContext(), "Check Inputs", Toast.LENGTH_LONG).show();
+
                 // Cancel the post on failure.
                 call.cancel();
                 Log.d("FAIL", e.getMessage());
@@ -174,6 +186,7 @@ public class AddOrder extends AppCompatActivity {
                         TextView responseTextLogin = findViewById(R.id.responseTextLogin);
                         try {
                             Log.d("Add order", "Succeful Add");
+                            Toast.makeText(getApplicationContext(), "Add Order", Toast.LENGTH_LONG).show();
 
                             Intent intent = new Intent(getApplicationContext(), MainMenu.class);
                             intent.putExtra("email", email);
@@ -185,6 +198,8 @@ public class AddOrder extends AppCompatActivity {
 
 
                         } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), "Check Inputs", Toast.LENGTH_LONG).show();
+
                             e.printStackTrace();
                         }
                     }
@@ -245,6 +260,7 @@ public class AddOrder extends AppCompatActivity {
                             simpleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                                     clickedItem=(String) simpleList.getItemAtPosition(position);
                                     Log.d("selectedlickedItem",clickedItem );
 

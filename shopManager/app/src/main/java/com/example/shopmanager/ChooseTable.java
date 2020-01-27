@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,6 +77,8 @@ public class ChooseTable extends AppCompatActivity {
         Log.d("Choose Table ", "button pressed"+table_id);
 
         if (table_id == "-1"){
+            Toast.makeText(getApplicationContext(), "Check Inputs", Toast.LENGTH_LONG).show();
+
             Intent intent = new Intent(getApplicationContext(), ChooseTable.class);
             intent.putExtra("email", email);
             intent.putExtra("id", id);
