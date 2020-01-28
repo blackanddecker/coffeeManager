@@ -1,4 +1,24 @@
-# ShopManager Server Api calls 
+# ShopManager 
+1.Installation
+2.Server Api calls
+
+## 1.Installation
+
+1. **Starting Server** 
+    After you create a virtual enviroment 
+    shopManager/server : 
+
+```..ShopManager/server$ pip3 install -r requirements.txt``` <br>
+``` ..ShopManager/server$ export FLASK_APP=main.py```<br>
+```..ShopManager/server$ flask run h -0.0.0.0```
+
+
+1. **Android App**
+    Using ifconfig find inet addr and then add it on MainActivity.java
+    Connect phone with android studio and run compiler 
+
+
+## 2. ShopManager Server Api calls 
 
 1. **User**
    - GET /select/userId 
@@ -28,9 +48,9 @@
 
 ## **USER**
 
-GET /select/userId 
+**<font color="red">GET /select/userId**</font>
 
-response: 
+*Response*: 
 ```
 
 {
@@ -45,51 +65,24 @@ response:
 ```
 
 
-POST /updateUser
+**<font color="red">POST /updateUser**</font>
 
-request 
+*Request*: 
 ```
 {
+    "email":<str>
 	"status":<admin/ user>, 
 	"name": <str>, 
 	"id":<unique id>
 }
 ```
 
-response : 
+*Response*: 
 
-```
-{   "success": <boelean>   }
-```
+On Success ```{   "success": True   }```<br>
+On Error ```{   "success": False   }```
 
-POST /addUser 
-
-```
-{
-    "email": <unique str>,
-    "id": <unique id>,
-    "name": <str>,
-    "password": ********,
-    "shop_id": <unique id>,
-    "status": <admin/ user>
-}
-```
-response
-
-```
-{   "success": <boelean>   }
-```
-
-POST  /login_user
-
-```
-{
-    "email": <unique str>,
-    "password": ********,
-}
-```
-
-response: 
+**<font color="red">POST /addUser**</font>
 
 ```
 {
@@ -101,14 +94,72 @@ response:
     "status": <admin/ user>
 }
 ```
+*Response*: 
+
+On Success ```{   "success": True   }```<br>
+On Error ```{   "success": False   }```
+
+**<font color="red">POST  /login_user**</font> 
+
+```
+{
+    "email": <unique str>,
+    "password": ********,
+}
+```
+
+*Response*: 
+```
+    On success:
+[
+    {
+        "email": <unique str>,
+        "id": <unique id>,
+        "name": <str>,
+        "password": ********,
+        "shop_id": <unique id>,
+        "status": <admin/ user>
+    }
+]
+```
+
+    On Failure:  []
+
+**<font color="red">POST  /login_mobile**</font> 
+
+```
+{
+    "email": <unique str>,
+    "password": ********,
+}
+```
+
+*Response*: 
+
+```
+    On success:
+[
+    {
+        "email": <unique str>,
+        "id": <unique id>,
+        "name": <str>,
+        "password": ********,
+        "shop_id": <unique id>,
+        "status": <admin/ user>
+    }
+]
+```
+    On Failure: []
 
 
 ## **PRODUCT**
 -------------------------------------------------
-GET /select_product/shopId 
-response:
+**<font color="red">GET /select_product/shopId**</font>
+
+*Response*: 
 
 ```
+    On success:
  [
     {
         "name":<str>,
@@ -117,12 +168,17 @@ response:
         "shop_id":<unique int>,
         "details":<str>
     }
+    {
+        ...
+    }
 ]
 ```
+    On Failure:  []
 
-POST /add_product
 
-request
+**<font color="red">POST /add_product**</font>
+
+*Request*: 
 ```
 {
 	"name":<str>,
@@ -132,15 +188,14 @@ request
 	"details":<str>
 }
 ```
-response: 
+*Response*: 
 
-```
-{   "success": <boelean>   }
-```
+On Success ```{   "success": True   }```<br>
+On Error ```{   "success": False   }```
 
-POST /update_product
+**<font color="red">POST /update_product**</font>
 
-request
+*Request*: 
 ```
 {
 	"name":<str>,
@@ -150,24 +205,24 @@ request
 	"details":<str>
 }
 ```
-response: 
+*Response*: 
 
-```
-{   "success": <boelean>   }
-```
-
+On Success ```{   "success": True   }```<br>
+On Error ```{   "success": False   }```
 
 ## **ORDER**
 -------------------------------------------------
-POST /add_order
+**<font color="red">POST /add_order**</font>
 
-request:
+*Request*: 
 ```
 {
 	"table_id":<unique int>,
 	"user_id":<unique int>,
-	"orderHistory":[{"product_id":<unique int>, "details":<str>}, 
-                        {"product_id":<unique int>, "details":<str>}],
+	"orderHistory":[
+            {"product_id":<unique int>, "details":<str>}, 
+            {"product_id":<unique int>, "details":<str>}
+        ],
 	"order_id":-1
 } 
 ```
@@ -175,60 +230,69 @@ request:
 __if order_id != -1 we add item to excisting order
 else we create a new order__
 
-response: 
+*Response*: 
 
-```
-{   "success": <boelean>   }
-```
-
+On Success ```{   "success": True   }```<br>
+On Error ```{   "success": False   }```
 
 
-POST /update_delivered_order
 
-request 
+**<font color="red">POST /update_delivered_order**</font>
 
-``` 
-{   "order_id":<unique id>  }
-```
-
-response: 
-
-```
-{   "success": <boelean>   }
-```
-
-
-POST /update_paid_order
+*Request*:  
 
 ``` 
 {   "order_id":<unique id>  }
 ```
 
-response: 
+*Response*: 
 
+On Success ```{   "success": True   }```<br>
+On Error ```{   "success": False   }```
+
+
+**<font color="red">POST /update_paid_order**</font>
+
+``` 
+{   "order_id":<unique id>  }
 ```
-{   "success": <boelean>   }
-```
+
+*Response*: 
+
+On Success ```{   "success": True   }```<br>
+On Error ```{   "success": False   }```
 
 -------------------------------------------------
-POST /select_order
 
-request
+**<font color="red">POST /select_order**</font>
+
+*Request*: 
 ```
 {
-	"shop_id":<unique id>, 
-	"start_date":<date>,
-	"end_date":<date>,
-	"status": <admin/employee>,
-	"employee": <list on names>,
-	"table": <list on table>,
+    "shop_id":<unique id>, 
+    "start_date":<date>,
+    "end_date":<date>,
+    "status": <admin/employee>,
+    "employee": <list on names>,
+    "table": <list on table>,
     "products": <list on products>
 }
 ```
 
-response : 
-
+Example of requests:
 ```
+{
+	"shop_id":0, 
+	"start_date":"2009-10-28",
+	"end_date":"2021-10-28",
+	"status":["pending", "delivered"],
+    "tables":["8"],
+    "employees":["0"]
+}
+```
+*Response*: 
+```
+    On success
 [
     {
         "date_delivered": <date>,
@@ -260,26 +324,26 @@ response :
     },
 ]
 ```
+    On Failure:  []
 
 ## **SHOP** 
 -------------------------------------------------
 
-POST /addShop
+**<font color="red">POST /addShop**</font>
 
-request 
+*Request*:  
 
 ```
 {   "name": <unique str>  }
 ```
 
-response: 
+*Response*: 
 
-```
-{   "success": <boelean>   }
-```
+On Success ```{   "success": True   }```<br>
+On Error ```{   "success": False   }```
 
 
-GET /selectShop/shopId
+**<font color="red">GET /selectShop/<shop_id>**</font>
 
 response : 
 ```
@@ -294,22 +358,35 @@ response :
 
 ## **TABLE** 
 -------------------------------------------------
-GET /select_table/{shop_id}
+**<font color="red">GET /show_tables/<shop_id>**</font>
 
+*Response*
+```
+    On success:
+[
+    {
+        "no_table": <int>,
+        "shop_id": <unique int>,
+        "table_id": <unique int>
+    },
+    {
+        ...
+    }
+]
+```
+    On Failure:  []
 
+**<font color="red">POST /add_table**</font>
 
-POST /add_table
-
-request 
+*Request*:  
 
 ``` 
 {   "shop_id":<unique id>  }
 ```
-response: 
+*Response*: 
 
-```
-{   "success": <boelean>   }
-```
+On Success ```{   "success": True   }```<br>
+On Error ```{   "success": False   }```
 
 
 

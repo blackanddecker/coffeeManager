@@ -27,8 +27,8 @@ def update_product(request , connection):
             cursor.execute(sql)
             connection.commit()
         responce = 'OK'
-        return responce, status.HTTP_200_OK
+        return {"success":True},, status.HTTP_200_OK
     except Exception as e: 
         print ("Internal Error ", e)
-        return 'Internal Server Error', status.HTTP_500_INTERNAL_SERVER_ERROR
+        return {"success":False},, status.HTTP_500_INTERNAL_SERVER_ERROR
 

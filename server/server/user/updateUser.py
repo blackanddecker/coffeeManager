@@ -18,9 +18,9 @@ def updateUser(request , connection):
             print(sql)
             cursor.execute(sql)
             connection.commit()
-        responce = 'OK'
+        responce = {"success":True}
         return responce, status.HTTP_200_OK
     except Exception as e: 
         print ("Internal Error ", e)
-        return 'Internal Server Error', status.HTTP_500_INTERNAL_SERVER_ERROR
+        return {"success":False}, status.HTTP_500_INTERNAL_SERVER_ERROR
 

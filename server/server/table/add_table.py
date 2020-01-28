@@ -32,7 +32,7 @@ def add_table(request , connection):
 
     except Exception as e: 
         print(e)
-        return 'Internal Server Error', status.HTTP_500_INTERNAL_SERVER_ERROR
+        return {"success":False}, status.HTTP_500_INTERNAL_SERVER_ERROR
 
     responce = 'OK'
-    return responce, status.HTTP_200_OK
+    return {"success":True}, status.HTTP_200_OK

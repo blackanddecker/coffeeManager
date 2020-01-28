@@ -22,7 +22,7 @@ import org.json.JSONObject;
 public class MainActivity extends AppCompatActivity {
     public static Context mainActivityContext;
 
-    static String postUrl = "http://192.168.1.6:5000";
+    static String postUrl = "http://10.64.83.27:5000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

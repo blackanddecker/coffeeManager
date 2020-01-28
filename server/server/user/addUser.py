@@ -34,7 +34,7 @@ def addUser(request , connection):
 
     except Exception as e: 
         print(e)
-        return 'Email excists', status.HTTP_200_OK
+        return {"success":False}, status.HTTP_200_OK
 
     responce = 'OK'
-    return responce, status.HTTP_200_OK
+    return {"success":True}, status.HTTP_200_OK
