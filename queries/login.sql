@@ -1,1 +1,0 @@
-SELECT * FROM mydb.user WHERE username = "manager" AND password="password";

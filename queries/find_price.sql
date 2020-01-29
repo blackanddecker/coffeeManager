@@ -1,1 +1,0 @@
-SELECT price , name FROM mydb.orders o , mydb.product p WHERE o.id = 0 AND p.id = o.product_id;
