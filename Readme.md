@@ -1,6 +1,8 @@
 # ShopManager 
 1.Installation
-2.Server Api calls
+2.Database Schema
+3.Server Api calls
+4.Pdf with web application and android app
 
 ## 1.Installation
 
@@ -17,8 +19,11 @@
     Using ifconfig find inet addr and then add it on MainActivity.java
     Connect phone with android studio and run compiler 
 
+## 2.Database Schema
+![Test Image 1](server/schema.png)
 
-## 2. ShopManager Server Api calls 
+
+## 3. ShopManager Server Api calls 
 
 1. **User**
    - GET /select/userId 
