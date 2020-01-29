@@ -1,12 +1,15 @@
 # ShopManager 
-1.Installation
-2.Database Schema
-3.Server Api calls
-4.Pdf with web application and android app
+1. Installation <br>
+2. Database Schema <br>
+3. Server Api calls <br>
+4. Pdf with web application and android app : https://github.com/blackanddecker/coffeeManager/blob/master/Screenshots.pdf
 
 ## 1.Installation
 
-1. **Starting Server** 
+0. **Import Database Schema** <br>
+    From database file import schema 
+
+1. **Starting Server** <br>
     After you create a virtual enviroment 
     shopManager/server : 
 
@@ -15,7 +18,7 @@
 ```..ShopManager/server$ flask run h -0.0.0.0```
 
 
-1. **Android App**
+2. **Android App**<br>
     Using ifconfig find inet addr and then add it on MainActivity.java
     Connect phone with android studio and run compiler 
 
